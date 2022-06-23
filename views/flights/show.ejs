@@ -4,7 +4,65 @@
 
 <main>
     <h1><%= title %></h1>
-
+    <section>
+        <div>Airline:</div>
+        <div><%= flight.airline %></div>
+        <div>Airport:</div>
+        <div><%= flight.airport %></div>
+        <div>Flight Number:</div>
+        <div><%= flight.flightNo %></div>
+        <div>Departure:</div>
+        <div><%= flight.departs %></div>
+        <div>Meals:</div>
+        <ul>
+            <% flight.food.forEach(food => { %>
+                <li><%= food.name %></li>
+            <% }) %>
+        </ul>
+    </section>
+    <form id="add-meal-to-food" action="/flights/<%= flight._id %>/meals" method="POST">
+    <select name="mealId">
+        <% meals.forEach(meal => { %>
+            <option value="<%= meal._id %>"><%= meal.name %></option>
+        <% }) %>
+        </select>
+        <button type="submit">Add to Meals</button>
+    </form>
+        <div>
+            <a href="/flights/<%= flight._id %>/edit">
+                <button>Edit Flight</button>
+            </a>
+        </div>
+        <form action="/flights/<%= flight._id %>/tickets" method="POST">
+            <label for="content-textarea">Seat:</label>
+            <input name="seat" required pattern="[A-F][1-9]\d?">
+            <label for="price-input">Price:</label>
+            <input type="number" name="price">
+            <button type="submit">Add Ticket</button>
+        </form>
+        <% if (flight.tickets.length) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Seat</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% flight.tickets.forEach(function(ticket) { %>
+                        <tr>
+                            <td><%= ticket.createdAt.toLocaleDateString() %></td>
+                            <td><%= ticket.seat %></td>
+                            <td><%= ticket.price %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <h3>No Tickets Yet</h3>
+        <% } %>
+    </section>
 </main>
 
 <%- include('../partials/footer') %>

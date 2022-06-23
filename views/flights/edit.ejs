@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/stylesheets/flights/new.css" />
 <%- include('../partials/nav') %>
 <h1><%= title %> </h1>
-<form id="new-form" action="/flights" method="POST">
+<form id="new-form" action="/flights/<%= flight._id %>?_method=PUT" method="POST">
     <label> Airline
         <select name="airline">
             <option value="American">American</option>
@@ -24,7 +24,7 @@
     <label> Departs
         <input type="datetime-local" name="departs"></input>
     </label>
-    <input type="submit" value="Add Flight"></input>
+    <input type="submit" value="Edit Flight"></input>
 </form>
 
 <%- include("../partials/footer") %>
